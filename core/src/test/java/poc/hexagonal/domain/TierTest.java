@@ -1,8 +1,11 @@
-package poc.hexagonal;
+package poc.hexagonal.domain;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import poc.hexagonal.domain.Event;
+import poc.hexagonal.domain.Tier;
+import poc.hexagonal.domain.TierDetails;
 import poc.hexagonal.error.BusinessError;
 
 import static org.junit.Assert.assertEquals;

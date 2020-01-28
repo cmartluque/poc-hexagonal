@@ -1,11 +1,12 @@
-package poc.hexagonal;
+package poc.hexagonal.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NonNull;
 import lombok.Value;
 
 @AllArgsConstructor
-@Value
+@Data
 public class Event {
     @NonNull
     private Integer length;

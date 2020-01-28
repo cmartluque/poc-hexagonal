@@ -1,4 +1,4 @@
-package poc.hexagonal;
+package poc.hexagonal.domain;
 
 import poc.hexagonal.error.BusinessError;
 
