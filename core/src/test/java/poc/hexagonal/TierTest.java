@@ -3,6 +3,7 @@ package poc.hexagonal;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
+import poc.hexagonal.error.BusinessError;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,49 +21,49 @@ public class TierTest {
     @Test(expected = RuntimeException.class)
     public void addConference_shouldThrowException_whenConferenceIsEmptyDoesNotFits() {
         //given
-        final Conference conference = new Conference(THREE_HOURS);
+        final Event event = new Event(THREE_HOURS);
         final Tier tier = new Tier(TWO_HOURS);
         //when
-        tier.add(conference);
+        tier.add(event);
     }
 
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = BusinessError.class)
     public void addConference_shouldThrowException_whenConferenceIsNotEmptyDoesNotFits() {
         //given
-        final Conference firstConference = new Conference(ONE_HOUR);
-        final Conference secondConference = new Conference(TWO_HOURS);
+        final Event firstEvent = new Event(ONE_HOUR);
+        final Event secondEvent = new Event(TWO_HOURS);
         final Tier tier = new Tier(TWO_HOURS);
-        tier.add(firstConference);
+        tier.add(firstEvent);
         //when
-        tier.add(secondConference);
+        tier.add(secondEvent);
     }
 
     @Test
     public void addConference_shouldAddGivenConference_whenTierIsEmptyAndConferenceFits() {
         //given
-        final Conference conference = new Conference(ONE_HOUR);
+        final Event event = new Event(ONE_HOUR);
         final Tier tier = new Tier(TWO_HOURS);
         //when
-        tier.add(conference);
+        tier.add(event);
         //then
-        assertTrue(SIZE_WITH_ONE_ELEMENT == tier.getConferences().size());
-        assertEquals(conference, tier.getConferences().get(0));
+        assertTrue(SIZE_WITH_ONE_ELEMENT == tier.events().size());
+        assertEquals(event, tier.events().get(0));
     }
 
     @Test
     public void addConference_shouldAddGivenConference_whenTierIsNotEmptyAndConferenceFits() {
         //given
-        final Conference firstConference = new Conference(ONE_HOUR);
-        final Conference secondConference = new Conference(TWO_HOURS);
+        final Event firstEvent = new Event(ONE_HOUR);
+        final Event secondEvent = new Event(TWO_HOURS);
         final Tier tier = new Tier(FOUR_HOURS);
-        tier.add(firstConference);
+        tier.add(firstEvent);
         //when
-        tier.add(secondConference);
+        tier.add(secondEvent);
         //then
-        assertTrue(SIZE_WITH_TWO_ELEMENT == tier.getConferences().size());
-        assertTrue(tier.getConferences().contains(firstConference));
-        assertTrue(tier.getConferences().contains(secondConference));
+        assertTrue(SIZE_WITH_TWO_ELEMENT == tier.events().size());
+        assertTrue(tier.events().contains(firstEvent));
+        assertTrue(tier.events().contains(secondEvent));
     }
 
     @Test
@@ -78,9 +79,9 @@ public class TierTest {
     @Test
     public void remainingTime_shouldReturnTiersLenghtWithoutConferenceLenght_whenTierHasOneConference() {
         //given
-        final Conference conference = new Conference(ONE_HOUR);
+        final Event event = new Event(ONE_HOUR);
         final Tier tier = new Tier(THREE_HOURS);
-        tier.add(conference);
+        tier.add(event);
         //when
         final Integer tiersRemainingTime = tier.remainingTime();
         //then
@@ -90,11 +91,11 @@ public class TierTest {
     @Test
     public void remainingTime_shouldReturnTiersLenghtWithoutConferenceLenght_whenTierHasMoreThanOneConference() {
         //given
-        final Conference firstConference = new Conference(ONE_HOUR);
-        final Conference secondConference = new Conference(TWO_HOURS);
+        final Event firstEvent = new Event(ONE_HOUR);
+        final Event secondEvent = new Event(TWO_HOURS);
         final Tier tier = new Tier(THREE_HOURS);
-        tier.add(firstConference);
-        tier.add(secondConference);
+        tier.add(firstEvent);
+        tier.add(secondEvent);
         //when
         final Integer tiersRemainingTime = tier.remainingTime();
         //then

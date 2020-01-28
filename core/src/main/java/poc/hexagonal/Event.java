@@ -6,7 +6,7 @@ import lombok.Value;
 
 @AllArgsConstructor
 @Value
-public class Conference {
+public class Event {
     @NonNull
     private Integer length;
 }

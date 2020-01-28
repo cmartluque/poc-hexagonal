@@ -1,34 +1,33 @@
 package poc.hexagonal;
 
-import lombok.Value;
+import poc.hexagonal.error.BusinessError;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Value
 public class Tier {
     private Integer lengthInMinutes;
-    private List<Conference> conferences;
+    private List<Event> events;
 
-    public Tier(Integer lengthInMinutes){
+    public Tier(Integer lengthInMinutes) {
         this.lengthInMinutes = lengthInMinutes;
-        conferences = new ArrayList<>();
+        events = new ArrayList<>();
     }
 
 
-    public void add(Conference conference) {
-        if (!fits(conference)) {
+    public void add(Event event) {
+        if (!fits(event)) {
             throwDoesNotFitException();
         }
-        conferences.add(conference);
+        events.add(event);
     }
 
-    private boolean fits(Conference conference) {
-        return remainingTime() >= conference.getLength();
+    private boolean fits(Event event) {
+        return remainingTime() >= event.getLength();
     }
 
     private void throwDoesNotFitException() {
-        throw new RuntimeException();
+        throw new BusinessError();
     }
 
     public Integer remainingTime() {
@@ -36,9 +35,13 @@ public class Tier {
     }
 
     private Integer currentOccupiedTime() {
-        return conferences.stream()
-                .map(Conference::getLength)
+        return events.stream()
+                .map(Event::getLength)
                 .reduce(0, (subtotal, currentConference) ->
                         subtotal + currentConference);
+    }
+
+    public List<Event> events(){
+        return new ArrayList<>(events);
     }
 }
