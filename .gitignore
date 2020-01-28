@@ -15,3 +15,7 @@
 .idea/
 
 .DS_Store
+
+*.iml
+
+core/target/
