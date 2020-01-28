@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Tier {
-    private Integer lengthInMinutes;
+    private TierDetails tierDetails;
     private List<Event> events;
 
-    public Tier(Integer lengthInMinutes) {
-        this.lengthInMinutes = lengthInMinutes;
-        events = new ArrayList<>();
+    public Tier(TierDetails tierDetails) {
+        this.tierDetails = tierDetails;
+        this.events = new ArrayList<>();
     }
 
 
@@ -31,7 +31,7 @@ public class Tier {
     }
 
     public Integer remainingTime() {
-        return lengthInMinutes - currentOccupiedTime();
+        return tierDetails.getLengthInMinutes() - currentOccupiedTime();
     }
 
     private Integer currentOccupiedTime() {

@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Agenda {
-    private Integer maxNumberOfTiers;
+    private AgendaDetails agendaDetails;
     private List<Tier> tiers;
 
-    public Agenda(Integer maxNumberOfTiers) {
-        this.maxNumberOfTiers = maxNumberOfTiers;
+    public Agenda(AgendaDetails agendaDetails) {
+        this.agendaDetails = agendaDetails;
         this.tiers = new ArrayList<>();
     }
 
@@ -24,7 +24,7 @@ public class Agenda {
     }
 
     private boolean isMaxNumberOfTiersReached() {
-        return maxNumberOfTiers == tiers.size();
+        return agendaDetails.getMaxNumberOfTiers() == tiers.size();
     }
 
     public List<Tier> tiers() {

@@ -10,6 +10,7 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TierTest {
+    private static Long TIER_ID = 1L;
     private static Integer ZERO_HOURS = 0;
     private static Integer ONE_HOUR = 60;
     private static Integer TWO_HOURS = 120;
@@ -18,11 +19,12 @@ public class TierTest {
     private static Integer SIZE_WITH_ONE_ELEMENT = 1;
     private static Integer SIZE_WITH_TWO_ELEMENT = 2;
 
-    @Test(expected = RuntimeException.class)
+    @Test(expected = BusinessError.class)
     public void addConference_shouldThrowException_whenConferenceIsEmptyDoesNotFits() {
         //given
         final Event event = new Event(THREE_HOURS);
-        final Tier tier = new Tier(TWO_HOURS);
+        final TierDetails tierDetails = new TierDetails(TIER_ID, TWO_HOURS);
+        final Tier tier = new Tier(tierDetails);
         //when
         tier.add(event);
     }
@@ -33,7 +35,8 @@ public class TierTest {
         //given
         final Event firstEvent = new Event(ONE_HOUR);
         final Event secondEvent = new Event(TWO_HOURS);
-        final Tier tier = new Tier(TWO_HOURS);
+        final TierDetails tierDetails = new TierDetails(TIER_ID, TWO_HOURS);
+        final Tier tier = new Tier(tierDetails);
         tier.add(firstEvent);
         //when
         tier.add(secondEvent);
@@ -43,7 +46,8 @@ public class TierTest {
     public void addConference_shouldAddGivenConference_whenTierIsEmptyAndConferenceFits() {
         //given
         final Event event = new Event(ONE_HOUR);
-        final Tier tier = new Tier(TWO_HOURS);
+        final TierDetails tierDetails = new TierDetails(TIER_ID, TWO_HOURS);
+        final Tier tier = new Tier(tierDetails);
         //when
         tier.add(event);
         //then
@@ -56,7 +60,8 @@ public class TierTest {
         //given
         final Event firstEvent = new Event(ONE_HOUR);
         final Event secondEvent = new Event(TWO_HOURS);
-        final Tier tier = new Tier(FOUR_HOURS);
+        final TierDetails tierDetails = new TierDetails(TIER_ID, FOUR_HOURS);
+        final Tier tier = new Tier(tierDetails);
         tier.add(firstEvent);
         //when
         tier.add(secondEvent);
@@ -69,7 +74,8 @@ public class TierTest {
     @Test
     public void remainingTime_shouldReturnTiersLenght_whenTierIsEmpty() {
         //given
-        final Tier tier = new Tier(TWO_HOURS);
+        final TierDetails tierDetails = new TierDetails(TIER_ID, TWO_HOURS);
+        final Tier tier = new Tier(tierDetails);
         //when
         final Integer tiersRemainingTime = tier.remainingTime();
         //then
@@ -80,7 +86,8 @@ public class TierTest {
     public void remainingTime_shouldReturnTiersLenghtWithoutConferenceLenght_whenTierHasOneConference() {
         //given
         final Event event = new Event(ONE_HOUR);
-        final Tier tier = new Tier(THREE_HOURS);
+        final TierDetails tierDetails = new TierDetails(TIER_ID, THREE_HOURS);
+        final Tier tier = new Tier(tierDetails);
         tier.add(event);
         //when
         final Integer tiersRemainingTime = tier.remainingTime();
@@ -93,7 +100,8 @@ public class TierTest {
         //given
         final Event firstEvent = new Event(ONE_HOUR);
         final Event secondEvent = new Event(TWO_HOURS);
-        final Tier tier = new Tier(THREE_HOURS);
+        final TierDetails tierDetails = new TierDetails(TIER_ID, THREE_HOURS);
+        final Tier tier = new Tier(tierDetails);
         tier.add(firstEvent);
         tier.add(secondEvent);
         //when
