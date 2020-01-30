@@ -4,7 +4,7 @@ import poc.hexagonal.domain.Tier;
 
 import java.util.Optional;
 
-public interface TierRepository {
+public interface TierDataAccess {
     Optional<Tier> findById(Long id);
 
     void update(Tier tier);

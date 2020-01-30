@@ -4,6 +4,6 @@ import poc.hexagonal.domain.Event;
 
 import java.util.Optional;
 
-public interface EventRepository {
+public interface EventDataAccess {
     Optional<Event> findById(Long eventId);
 }

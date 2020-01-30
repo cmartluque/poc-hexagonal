@@ -5,17 +5,17 @@ import poc.hexagonal.domain.Agenda;
 import poc.hexagonal.domain.Tier;
 import poc.hexagonal.error.BusinessError;
 import poc.hexagonal.port.in.AgendaService;
-import poc.hexagonal.port.out.AgendaRepository;
-import poc.hexagonal.port.out.TierRepository;
+import poc.hexagonal.port.out.AgendaDataAccess;
+import poc.hexagonal.port.out.TierDataAccess;
 
 import javax.validation.constraints.NotNull;
 
 @RequiredArgsConstructor
 public class AgendaServiceImpl implements AgendaService {
     @NotNull
-    private AgendaRepository agendaRepository;
+    private AgendaDataAccess agendaDataAccess;
     @NotNull
-    private TierRepository tierRepository;
+    private TierDataAccess tierDataAccess;
 
     @Override
     public void addTier(Long agendaId, Long tierId) {
@@ -23,14 +23,14 @@ public class AgendaServiceImpl implements AgendaService {
         final Tier tier = findTierById(tierId);
 
         agenda.add(tier);
-        agendaRepository.update(agenda);
+        agendaDataAccess.update(agenda);
     }
 
     private Agenda findAgendaById(Long id) {
-        return agendaRepository.findById(id).orElseThrow(BusinessError::new);
+        return agendaDataAccess.findById(id).orElseThrow(BusinessError::new);
     }
 
     private Tier findTierById(Long id) {
-        return tierRepository.findById(id).orElseThrow(BusinessError::new);
+        return tierDataAccess.findById(id).orElseThrow(BusinessError::new);
     }
 }

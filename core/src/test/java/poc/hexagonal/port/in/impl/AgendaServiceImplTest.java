@@ -8,8 +8,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import poc.hexagonal.domain.Agenda;
 import poc.hexagonal.domain.Tier;
 import poc.hexagonal.error.BusinessError;
-import poc.hexagonal.port.out.AgendaRepository;
-import poc.hexagonal.port.out.TierRepository;
+import poc.hexagonal.port.out.AgendaDataAccess;
+import poc.hexagonal.port.out.TierDataAccess;
 
 import java.util.Optional;
 
@@ -24,9 +24,9 @@ public class AgendaServiceImplTest {
     @InjectMocks
     private AgendaServiceImpl agendaService;
     @Mock
-    private AgendaRepository agendaRepository;
+    private AgendaDataAccess agendaDataAccess;
     @Mock
-    private TierRepository tierRepository;
+    private TierDataAccess tierDataAccess;
     @Mock
     private Agenda agenda;
     @Mock
@@ -35,18 +35,18 @@ public class AgendaServiceImplTest {
     @Test
     public void addTier_souldAddTierOfGivenIdToAgendaOfGivenId_whenBothExists() {
         //given
-        when(agendaRepository.findById(anyLong())).thenReturn(Optional.of(agenda));
-        when(tierRepository.findById(anyLong())).thenReturn(Optional.of(tier));
+        when(agendaDataAccess.findById(anyLong())).thenReturn(Optional.of(agenda));
+        when(tierDataAccess.findById(anyLong())).thenReturn(Optional.of(tier));
         //when
         agendaService.addTier(AGENDA_ID, TIER_ID);
         //then
-        verify(agendaRepository).findById(AGENDA_ID);
-        verify(tierRepository).findById(TIER_ID);
+        verify(agendaDataAccess).findById(AGENDA_ID);
+        verify(tierDataAccess).findById(TIER_ID);
         verify(agenda).add(tier);
-        verify(agendaRepository).update(agenda);
+        verify(agendaDataAccess).update(agenda);
 
-        verifyNoMoreInteractions(agendaRepository);
-        verifyNoMoreInteractions(tierRepository);
+        verifyNoMoreInteractions(agendaDataAccess);
+        verifyNoMoreInteractions(tierDataAccess);
         verifyNoMoreInteractions(agenda);
         verifyNoMoreInteractions(tier);
     }
@@ -54,7 +54,7 @@ public class AgendaServiceImplTest {
     @Test(expected = BusinessError.class)
     public void addTier_shouldThrowAnException_whenNoAgendaIsFoundForGivenId(){
         //given
-        when(agendaRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(agendaDataAccess.findById(anyLong())).thenReturn(Optional.empty());
         //when
         agendaService.addTier(AGENDA_ID, TIER_ID);
     }
@@ -62,8 +62,8 @@ public class AgendaServiceImplTest {
     @Test(expected = BusinessError.class)
     public void addTier_shouldThrowAnException_whenNoTierIsFoundForGivenId(){
         //given
-        when(agendaRepository.findById(anyLong())).thenReturn(Optional.of(agenda));
-        when(tierRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(agendaDataAccess.findById(anyLong())).thenReturn(Optional.of(agenda));
+        when(tierDataAccess.findById(anyLong())).thenReturn(Optional.empty());
         //when
         agendaService.addTier(AGENDA_ID, TIER_ID);
     }

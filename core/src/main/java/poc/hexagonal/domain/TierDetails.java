@@ -1,9 +1,9 @@
 package poc.hexagonal.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 @AllArgsConstructor
 public class TierDetails {
     private Long id;

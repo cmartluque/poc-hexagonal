@@ -1,11 +1,11 @@
 package poc.hexagonal.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
-@Value
+@Data
 @AllArgsConstructor
 public class AgendaDetails {
     @NotNull

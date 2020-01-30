@@ -12,8 +12,12 @@ public class Agenda {
     private List<Tier> tiers;
 
     public Agenda(AgendaDetails agendaDetails) {
+        this(agendaDetails, new ArrayList<>());
+    }
+
+    public Agenda(AgendaDetails agendaDetails, List<Tier> tiers){
         this.agendaDetails = agendaDetails;
-        this.tiers = new ArrayList<>();
+        this.tiers = tiers;
     }
 
     public void add(Tier tier) {
